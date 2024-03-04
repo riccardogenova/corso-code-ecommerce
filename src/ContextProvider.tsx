@@ -1,18 +1,11 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  qty: number;
-  image: string;
-}
+import { Product } from "./declarations";
 
 export const AppContext = createContext<{
   products: Array<Product>;
   cart: Array<{ prod: Product; qty: number }>;
   paid: boolean;
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, num: number) => void;
   removeFromCart: (idProduct: Product["id"]) => void;
   checkout: () => void;
   getTotalProductInCart: () => number;
@@ -65,17 +58,17 @@ export function ContextProvider({ children }: Props) {
     }
   }
 
-  function addToCart(product: Product) {
+  function addToCart(product: Product, num: number) {
     const productFound = cart.find(
       (productCart) => product.id === productCart.prod.id
     );
     if (!productFound) {
-      const newCart = [...cart, { prod: product, qty: 1 }];
+      const newCart = [...cart, { prod: product, qty: num }];
       setCart(newCart);
     } else {
       const newCart = cart.map((productCart) =>
         product.id === productCart.prod.id
-          ? { ...productCart, qty: productCart.qty + 1 }
+          ? { ...productCart, qty: productCart.qty + num }
           : { ...productCart }
       );
       setCart(newCart);

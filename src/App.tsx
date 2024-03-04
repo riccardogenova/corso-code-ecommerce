@@ -28,7 +28,10 @@ function App() {
       {!paid && <Navbar />}
       <Routes>
         <Route path="/" element={<RouteHome />} />
-        <Route path="/p/:idProduct" element={<RouteProduct />} />
+        <Route
+          path="/product/:idCategory/:idProduct"
+          element={<RouteProduct />}
+        />
         <Route path="/cart" element={<RouteCart />} />
         <Route element={<RouteProtected />}>
           <Route path="/checkout" element={<RouteCheckout />} />
