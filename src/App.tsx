@@ -1,38 +1,52 @@
 import { useContext } from "react";
-import { AppContext } from "./ContextProvider";
-import {
-  BrowserRouter,
-  Navigate,
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { AppContext } from "./Context";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { RouteHome } from "./routes/Home";
 import { RouteProduct } from "./routes/Product";
 import { RouteCart } from "./routes/Cart";
 import { RouteCheckout } from "./routes/Checkout";
 import { Route404 } from "./routes/404";
 import Navbar from "./components/Navbar";
-
-function RouteProtected() {
-  const { paid } = useContext(AppContext);
-  if (paid) return <Outlet />;
-  return <Navigate to="/" />;
-}
+import { RouteLogin } from "./routes/Login";
+import { RouteProtected } from "./components/RouteProtected";
+import { RouteGuest } from "./components/RouteGuest";
+import { RouteLogged } from "./components/RouteLogged";
+import { CircularProgress } from "@mui/material";
 
 function App() {
-  const { paid } = useContext(AppContext);
+  const { paid, username, products } = useContext(AppContext);
+
+  if (products.length === 0)
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
 
   return (
     <BrowserRouter>
-      {!paid && <Navbar />}
+      {!paid && !!username && <Navbar />}
       <Routes>
-        <Route path="/" element={<RouteHome />} />
-        <Route
-          path="/product/:idCategory/:idProduct"
-          element={<RouteProduct />}
-        />
-        <Route path="/cart" element={<RouteCart />} />
+        <Route element={<RouteGuest />}>
+          <Route path="/login" element={<RouteLogin />} />
+        </Route>
+        <Route element={<RouteLogged />}>
+          <Route path="/" element={<RouteHome />} />
+        </Route>
+        <Route element={<RouteLogged />}>
+          <Route
+            path="/product/:idCategory/:idProduct"
+            element={<RouteProduct />}
+          />
+          <Route path="/cart" element={<RouteCart />} />
+        </Route>
         <Route element={<RouteProtected />}>
           <Route path="/checkout" element={<RouteCheckout />} />
         </Route>

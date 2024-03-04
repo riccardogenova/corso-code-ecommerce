@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { AppContext } from "../ContextProvider";
+import { AppContext } from "../Context";
 
 export function RouteCheckout() {
   const { onCheckoutSuccess } = useContext(AppContext);

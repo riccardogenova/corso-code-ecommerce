@@ -1,17 +1,9 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
-import { Product } from "./declarations";
+import { Product, TContext } from "./declarations";
+import { utilityGetPreviousUsername } from "./utils";
 
-export const AppContext = createContext<{
-  products: Array<Product>;
-  cart: Array<{ prod: Product; qty: number }>;
-  paid: boolean;
-  addToCart: (product: Product, num: number) => void;
-  removeFromCart: (idProduct: Product["id"]) => void;
-  checkout: () => void;
-  getTotalProductInCart: () => number;
-  onCheckoutSuccess: () => void;
-  getTotalAvailableProduct: (product: Product) => number;
-}>({
+export const AppContext = createContext<TContext>({
+  username: "",
   products: [],
   cart: [],
   paid: false,
@@ -21,6 +13,8 @@ export const AppContext = createContext<{
   getTotalProductInCart: () => 0,
   onCheckoutSuccess: () => {},
   getTotalAvailableProduct: () => 0,
+  login: () => {},
+  logout: () => {},
 });
 
 interface Props {
@@ -31,6 +25,8 @@ export function ContextProvider({ children }: Props) {
   const [products, setProducts] = useState<Array<Product>>([]);
   const [cart, setCart] = useState<Array<{ prod: Product; qty: number }>>([]);
   const [paid, setPaid] = useState<boolean>(false);
+  const initUsername = utilityGetPreviousUsername();
+  const [username, setUsername] = useState<string>(initUsername);
 
   async function getProducts() {
     const response = await fetch("https://mockend.up.railway.app/api/products");
@@ -97,6 +93,16 @@ export function ContextProvider({ children }: Props) {
     return product.qty - totalProductInCart;
   }
 
+  function login(username: string) {
+    setUsername(username);
+    localStorage.setItem("username", username);
+  }
+
+  function logout() {
+    setUsername("");
+    localStorage.removeItem("username");
+  }
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -104,6 +110,7 @@ export function ContextProvider({ children }: Props) {
   return (
     <AppContext.Provider
       value={{
+        username,
         products,
         cart,
         paid,
@@ -113,6 +120,8 @@ export function ContextProvider({ children }: Props) {
         getTotalProductInCart,
         onCheckoutSuccess,
         getTotalAvailableProduct,
+        login,
+        logout,
       }}
     >
       {children}

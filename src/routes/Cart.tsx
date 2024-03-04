@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AppContext } from "../ContextProvider";
+import { AppContext } from "../Context";
 import { useNavigate } from "react-router-dom";
 
 export function RouteCart() {
@@ -8,7 +8,7 @@ export function RouteCart() {
   const [input, setInput] = useState("");
   const [errors, setErrors] = useState("");
 
-  if (cart.length === 0) return <h1>Amunì! Compra qualcosa...</h1>;
+  if (cart.length === 0) return <h1>Nessun prodotto nel carrello</h1>;
 
   return (
     <div>

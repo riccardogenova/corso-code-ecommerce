@@ -1,23 +1,21 @@
 import { useContext } from "react";
-import { AppContext } from "../ContextProvider";
+import { AppContext } from "../Context";
 import { Card } from "../components/Card";
+import { Container, Grid } from "@mui/material";
 
 export function RouteHome() {
   const { products } = useContext(AppContext);
 
   return (
-    <div>
+    <Container maxWidth="lg">
       <h1>Home</h1>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-        }}
-      >
+      <Grid container spacing={2}>
         {products.map((product) => (
-          <Card product={product} key={product.id} />
+          <Grid item sm={6} md={3} key={product.id}>
+            <Card product={product} />
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Container>
   );
 }
