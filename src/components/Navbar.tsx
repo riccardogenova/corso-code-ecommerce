@@ -5,12 +5,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useContext } from "react";
-import { AppContext } from "../Context";
 import { Link, useNavigate } from "react-router-dom";
 
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { IconButton } from "@mui/material";
+import { AppContext } from "../context/createContext";
 
 export default function DrawerAppBar() {
   const { getTotalProductInCart, logout, username } = useContext(AppContext);

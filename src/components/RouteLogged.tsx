@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import { AppContext } from "../Context";
+import { AppContext } from "../context/createContext";
 
 export function RouteLogged() {
   const { username } = useContext(AppContext);

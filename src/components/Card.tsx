@@ -4,10 +4,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { useContext, useState } from "react";
-import { AppContext } from "../Context";
 import { Product } from "../declarations";
 import { Link } from "react-router-dom";
 import ShoppingCart from "@mui/icons-material/AddShoppingCart";
+import { AppContext } from "../context/createContext";
 
 interface Props {
   product: Product;
@@ -18,6 +18,7 @@ export function Card({ product }: Props) {
 
   const totalAvailable = getTotalAvailableProduct(product);
   const [input, setInput] = useState(1);
+
   return (
     <MaterialCard sx={{ maxWidth: 345 }}>
       <CardActionArea>

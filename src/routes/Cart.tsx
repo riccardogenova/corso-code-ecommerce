@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { AppContext } from "../Context";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../context/createContext";
 
 export function RouteCart() {
   const { cart, removeFromCart, checkout } = useContext(AppContext);

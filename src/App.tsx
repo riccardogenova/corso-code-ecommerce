@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { AppContext } from "./Context";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { RouteHome } from "./routes/Home";
 import { RouteProduct } from "./routes/Product";
@@ -12,6 +11,7 @@ import { RouteProtected } from "./components/RouteProtected";
 import { RouteGuest } from "./components/RouteGuest";
 import { RouteLogged } from "./components/RouteLogged";
 import { CircularProgress } from "@mui/material";
+import { AppContext } from "./context/createContext";
 
 function App() {
   const { paid, username, products } = useContext(AppContext);

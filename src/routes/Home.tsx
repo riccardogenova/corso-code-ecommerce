@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { AppContext } from "../Context";
 import { Card } from "../components/Card";
 import { Container, Grid } from "@mui/material";
+import { AppContext } from "../context/createContext";
 
 export function RouteHome() {
   const { products } = useContext(AppContext);
